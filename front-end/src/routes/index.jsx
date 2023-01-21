@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from '../pages/login';
 import Register from '../pages/register';
 import Products from '../pages/products';
@@ -15,13 +15,14 @@ export default function AppRouter() {
       <Routes>
         <Route path="/login" element={ <Login /> } />
         <Route path="/register" element={ <Register /> } />
-        <Route path="/costumer/products" element={ <Products /> } />
+        <Route path="/customer/products" element={ <Products /> } />
         <Route path="/costumer/checkout" element={ <Checkout /> } />
         <Route path="/customer/orders/:id" element={ <CostumerDetail /> } />
         <Route path="/customer/orders" element={ <CostumerOrders /> } />
         <Route path="/seller/orders/:id" element={ <SellerDetail /> } />
         <Route path="/seller/orders" element={ <SellerOrders /> } />
         <Route path="/admin/manage" element={ <AdminManage /> } />
+        <Route path="*" element={ <Navigate to="/login" /> } />
       </Routes>
     </BrowserRouter>
   );
