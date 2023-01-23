@@ -2,20 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoginService from '../services/loginService';
 
-const { saveCredential } = require('../utils/localStorageHelper');
+const { logIn } = require('../utils/localStorageHelper');
 
 export default function Login() {
   const [inputEmail, setInputEmail] = useState('');
   const [inputPassword, setInputPassword] = useState('');
-  const [disabledBtn, setDisabledBtn] = useState(true);
-  const [notFound, setNotFound] = useState(false);
+  const [disabledBtn, setDisabledBtn] = useState(true); // condição para habilita/desabilitar botão de login
+  const [notFound, setNotFound] = useState(false); // condição para habilitar/desabilitar mensagem de erro de login
 
   const navigate = useNavigate();
 
+  // realiza verificação de email e senha sempre que altera nos inputs
   useEffect(() => {
     const toggleBtn = () => {
       const SIX = 6;
+      // validador de email
       const doEmailValidation = (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/).test(inputEmail);
+      // cria constante verificando email e se a senha tem 6 dígitos
       const dataValidation = doEmailValidation
         && inputPassword.length >= SIX;
       setDisabledBtn(!dataValidation);
@@ -23,6 +26,7 @@ export default function Login() {
     toggleBtn();
   }, [inputEmail, inputPassword]);
 
+  // gerenciador de formulário controlado
   function handleChange({ target }) {
     if (target.name === 'email-input') {
       setInputEmail(target.value);
@@ -33,12 +37,15 @@ export default function Login() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    // solicita login no backEnd com email e senha digitados
     const loginReturn = await LoginService.LoginService(
       { email: inputEmail, password: inputPassword },
     );
-    console.log(loginReturn);
+    // verifica se o retorno do back é positivo, se não for, mostra a mensagem oculta na tela
     if (loginReturn.message === 'Not Found') return setNotFound(true);
-    saveCredential(loginReturn);
+    // salva dados do login no localStorage
+    logIn(loginReturn);
+    // redireciona para a página de produtos
     navigate('/customer/products');
   }
 

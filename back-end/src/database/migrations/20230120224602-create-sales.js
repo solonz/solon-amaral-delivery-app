@@ -30,7 +30,7 @@ module.exports = {
         onDelete: 'CASCADE'
       },
       total_price: {
-        type: Sequelize.DECIMAL(9, 2),
+        type: Sequelize.DECIMAL(9, 2), // aceita 9 dígitos antes e 2 depois da virgula 
         allowNull: false
       },
       delivery_address: {

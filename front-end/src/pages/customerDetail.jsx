@@ -1,10 +1,10 @@
 import React from 'react';
 
 // Página genérica para ser criada
-export default function Checkout() {
+export default function CustomerDetail() {
   return (
     <header>
-      <div>Checkout</div>
+      <div>CustomerDetail</div>
     </header>
   );
 }

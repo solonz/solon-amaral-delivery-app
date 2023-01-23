@@ -1,10 +1,10 @@
 import React from 'react';
 
 // Componente genérico para ser criado
-export default function SellerOrderCard() {
+export default function CustomerOrderCard() {
   return (
     <header>
-      <div>SellerOrderCard</div>
+      <div>CustomerOrderCard</div>
     </header>
   );
 }
