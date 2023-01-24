@@ -116,9 +116,9 @@ export default function AdminManage() {
             id="role-input"
             value={ inputRole }
             onChange={ handleChange }
-            data-testid="admin_manage__button-register"
+            data-testid="admin_manage__select-role"
           >
-            <option value="Default">Default</option>
+            <option value="Default">-----------------</option>
             <option value="vendedor">Vendedor</option>
             <option value="cliente">Cliente</option>
             <option value="administrador">Administrador</option>
@@ -128,7 +128,7 @@ export default function AdminManage() {
             type="submit"
             disabled={ disabledBtn }
             className="register_btn"
-            data-testid="admin_manage__select-role"
+            data-testid="admin_manage__button-register"
           >
             register
           </button>
