@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { customerContext } from '../context/customerProvider';
-import { addToCart, rmFromCart } from '../utils/localStorageHelper';
+import { addToCart, rmFromCart, addValueToCart } from '../utils/localStorageHelper';
 
 // este componente é o modelo de cada card de produtos que vai aparecer na página
 export default function ProductCard({ // desestrutura o produto recebido como parâmetro
@@ -47,9 +47,9 @@ export default function ProductCard({ // desestrutura o produto recebido como pa
     // pega o valor do item que acionou a função
     const newValue = e.target.value;
     // verifica se o numero do input de number é inteiro
-    if (e.target.name === 'qtdInCArt' && Number.isInteger(parseInt(newValue, 10))) {
+    if (e.target.name === 'qtdInCArt') {
       // altera informações do produto no carrinho conforme digitado no input
-      const newCart = addToCart({ id, name, price, urlImage }, newValue);
+      const newCart = addValueToCart({ id, name, price, urlImage }, newValue);
       // atualiza o carrinho salvo no contexto customer
       setShopCart(newCart);
     }
