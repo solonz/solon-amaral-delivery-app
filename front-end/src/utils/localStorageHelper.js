@@ -1,16 +1,16 @@
 export function logIn(credentials) {
-  // salva dados do usuário no item 'credentials' do localStorage
-  localStorage.setItem('credentials', JSON.stringify(credentials));
+  // salva dados do usuário no item 'user' do localStorage
+  localStorage.setItem('user', JSON.stringify(credentials));
 }
 
 export function getCredentials() {
-  // pega dados do usuário no item 'credentials' do localStorage
-  return JSON.parse(localStorage.getItem('credentials'));
+  // pega dados do usuário no item 'user' do localStorage
+  return JSON.parse(localStorage.getItem('user'));
 }
 
 export function logOut() {
   // apaga dados do usuário e do carrinho do localStorage
-  localStorage.removeItem('credentials');
+  localStorage.removeItem('user');
   localStorage.removeItem('cartShop');
 }
 
