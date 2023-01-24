@@ -1,4 +1,5 @@
 const productService = require('../services/products.service');
+const path = require('path');
 
 const getProducts = async (req, res) => {
   // faz a requisição de produtos e recebe os produtos ou erro de token
@@ -6,11 +7,16 @@ const getProducts = async (req, res) => {
   res.status(200).json(result);
 };
 
-const getImages = async (req, res) => {
+const getImages = (req, res) => {
   const { imgName } = req.params;
-  console.log(imgName);
-  const image = await productService.getImage(imgName);
-  res.status(200).json(image);
+  const options = {
+    root: path.join(__dirname, '../images'),
+    dotfiles: 'deny',
+    headers: {
+      'Content-Type': 'image/jpeg'
+    }
+  };
+  res.sendFile(imgName, options);
 };
 
 module.exports = {
