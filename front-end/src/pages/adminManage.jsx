@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
 import registerService from '../services/registerService';
 import NavBar from '../components/navbar';
+// import pageAuth from '../services/adminService';
+// import { logOut } from '../utils/localStorageHelper';
 
 // Página genérica para ser criada
 export default function AdminManage() {
@@ -12,7 +15,7 @@ export default function AdminManage() {
   const [disabledBtn, setDisabledBtn] = useState(true); // gerenciador de botão habilitado/desabilitado
   const [exists, setExists] = useState(true); // gerenciador de mensagem de caso o nome ou email já seja cadastrado
 
-  console.log(inputRole);
+  // const navigate = useNavigate();
 
   useEffect(() => {
     const toggleBtn = () => {
@@ -28,6 +31,14 @@ export default function AdminManage() {
     };
     toggleBtn();
   }, [inputName, inputEmail, inputPassword, inputRole]);
+
+  // useEffect(() => {
+  //   const auth = pageAuth.pageAuth();
+  //   if (auth === ('Expired or invalid token' || 'Token not found')) {
+  //     logOut();
+  //     navigate('/login');
+  //   }
+  // }, []);
 
   // gerenciador de componentes controlados
   function handleChange({ target }) {
