@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import registerService from '../services/registerService';
 import NavBar from '../components/navbar';
-import { logIn } from '../utils/localStorageHelper';
 
 // Página genérica para ser criada
 export default function AdminManage() {
@@ -12,9 +10,9 @@ export default function AdminManage() {
   const [inputPassword, setInputPassword] = useState('');
   const [inputRole, setInputRole] = useState('Default');
   const [disabledBtn, setDisabledBtn] = useState(true); // gerenciador de botão habilitado/desabilitado
+  const [exists, setExists] = useState(true); // gerenciador de mensagem de caso o nome ou email já seja cadastrado
 
   console.log(inputRole);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const toggleBtn = () => {
@@ -51,14 +49,10 @@ export default function AdminManage() {
     event.preventDefault();
     // envia dados para o back end e recebe retorno
     const registerReturn = await registerService.RegisterService(
-      { name: inputName, email: inputEmail, password: inputPassword },
+      { name: inputName, email: inputEmail, password: inputPassword, role: inputRole },
     );
     // confere se o retorno diz que o cadastro ja existe e habilita mensagem de erro
     if (registerReturn.message === 'Conflict') return setExists(false);
-    // salva dados do usuário com o token no localStorage
-    logIn(registerReturn);
-    // redireciona para página de produtos
-    navigate('/customer/products');
   }
 
   return (
@@ -132,6 +126,12 @@ export default function AdminManage() {
           >
             register
           </button>
+          <span
+            hidden={ exists }
+            data-testid="common_register__element-invalid_register"
+          >
+            Usuário já existe.
+          </span>
         </form>
       </div>
     </>
