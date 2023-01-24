@@ -72,7 +72,7 @@ export default function ProductCard({ // desestrutura o produto recebido como pa
         <h3
           data-testid={ `customer_products__element-card-price-${id}` }
         >
-          { price }
+          { price.toFixed(2).replace('.', ',') }
         </h3>
         <img
           src={ urlImage }
