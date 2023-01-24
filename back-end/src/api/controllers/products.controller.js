@@ -11,7 +11,7 @@ const getImages = async (req, res) => {
   console.log(imgName);
   const image = await productService.getImage(imgName);
   res.status(200).json(image);
-}
+};
 
 module.exports = {
   getProducts,
