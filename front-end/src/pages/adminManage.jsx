@@ -59,7 +59,7 @@ export default function AdminManage() {
   async function handleSubmit(event) {
     event.preventDefault();
     // envia dados para o back end e recebe retorno
-    const registerReturn = await registerService.RegisterService(
+    const registerReturn = await registerService.adminRegisterService(
       { name: inputName, email: inputEmail, password: inputPassword, role: inputRole },
     );
     // confere se o retorno diz que o cadastro ja existe e habilita mensagem de erro
@@ -124,9 +124,9 @@ export default function AdminManage() {
             data-testid="admin_manage__select-role"
           >
             <option value="Default">-----------------</option>
-            <option value="vendedor">Vendedor</option>
-            <option value="cliente">Cliente</option>
-            <option value="administrador">Administrador</option>
+            <option value="seller">Vendedor</option>
+            <option value="customer">Cliente</option>
+            <option value="administrator">Administrador</option>
           </select>
           <br />
           <button
@@ -139,7 +139,7 @@ export default function AdminManage() {
           </button>
           <span
             hidden={ exists }
-            data-testid="common_register__element-invalid_register"
+            data-testid="admin_manage__element-invalid-register"
           >
             Usuário já existe.
           </span>
