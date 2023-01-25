@@ -1,10 +1,8 @@
 export function logIn(credentials) {
-  // salva dados do usuário no item 'user' do localStorage
   localStorage.setItem('user', JSON.stringify(credentials));
 }
 
 export function getCredentials() {
-  // pega dados do usuário no item 'user' do localStorage
   return JSON.parse(localStorage.getItem('user'));
 }
 

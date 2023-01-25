@@ -45,6 +45,8 @@ export default function Login() {
     if (loginReturn.message === 'Not Found') return setNotFound(true);
     // salva dados do login no localStorage
     logIn(loginReturn);
+    // redireciona para a página do administrador
+    if (loginReturn.role === 'administrator') return navigate('/admin/manage');
     // redireciona para a página de produtos
     navigate('/customer/products');
   }
