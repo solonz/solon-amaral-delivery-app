@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { getCredentials, logOut } from '../utils/localStorageHelper';
 
 export default function NavBar() {
   const [userName, setUserName] = useState('');
   const [userRole, setUserRole] = useState('');
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // ao carregar a página, pega dados do usuário no localStorage e salva no estado local
   useEffect(() => {
@@ -18,7 +18,7 @@ export default function NavBar() {
   // apaga dados do localStorage e volta para página de login
   const handleLogOut = () => {
     logOut();
-    navigate('/login');
+    // navigate('/login');
   };
 
   // esta função retorna os links utilizados para o role customer

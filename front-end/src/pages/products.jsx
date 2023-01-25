@@ -10,9 +10,18 @@ export default function Products() {
   const [products, setProducts] = useState(); // estado para salvar produtos recebidos do back
   const [isLoading, setIsLoading] = useState(true); // estado que garante que só vai mostrar cards após retorno do back
 
-  const { setShopCart } = useContext(customerContext); // contexto customer para pegar valores do carrinho e apagar carrinho no logout
+  const { shopCart, setShopCart } = useContext(customerContext); // contexto customer para pegar valores do carrinho e apagar carrinho no logout
 
   const navigate = useNavigate();
+
+  const getTotal = () => {
+    console.log(shopCart);
+    let total = 0;
+    shopCart.forEach((product) => {
+      total += (product.price * product.quantity);
+    });
+    return total.toFixed(2);
+  };
 
   // função que pega produtos do back e salva no estado local
   useEffect(() => {
@@ -36,7 +45,7 @@ export default function Products() {
   return (
     <>
       <header>
-        <NavBar />
+        { !isLoading && <NavBar /> }
       </header>
       <div>
         <div>
@@ -48,6 +57,21 @@ export default function Products() {
               price={ +product.price } // o + antes do valor converte string para number
               urlImage={ product.url_image }
             />))}
+        </div>
+        <div>
+          <button
+            type="button"
+            disabled={ shopCart.length === 0 }
+            data-testid="customer_products__button-cart"
+            onClick={ () => navigate('/customer/checkout') }
+          >
+            Valor do carrinho R$
+            <span
+              data-testid="customer_products__checkout-bottom-value"
+            >
+              { getTotal().replace('.', ',') }
+            </span>
+          </button>
         </div>
       </div>
     </>
