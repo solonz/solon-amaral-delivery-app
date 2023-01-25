@@ -4,6 +4,7 @@ import registerService from '../services/registerService';
 import NavBar from '../components/navbar';
 // import pageAuth from '../services/adminService';
 // import { logOut } from '../utils/localStorageHelper';
+// vendo onde está o erro
 
 // Página genérica para ser criada
 export default function AdminManage() {
