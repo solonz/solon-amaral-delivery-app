@@ -5,8 +5,8 @@ const { Product } = require('../../database/models');
 const getProducts = async () => Product.findAll();
 
 const getImage = (imgName) => new Promise((resolve, reject) => {
-    fs.readFile(`../images/${imgName}`, (err, data) => {
-        if (err) {
+    fs.readFile(`${__dirname}/../images/${imgName}`, (err, data) => {
+        if (err) {          
             reject(err);
             return;
         }
