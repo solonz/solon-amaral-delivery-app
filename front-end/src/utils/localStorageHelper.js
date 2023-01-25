@@ -14,6 +14,10 @@ export function logOut() {
   localStorage.removeItem('cartShop');
 }
 
+export function getCartShop() {
+  return JSON.parse(localStorage.getItem('cartShop'));
+}
+
 export function addToCart(product) {
   // pega o carrinho do local storage
   const cart = JSON.parse(localStorage.getItem('cartShop')) || [];
@@ -110,6 +114,19 @@ export function rmFromCart(productId) {
       // se for zero, remove o produto do carrinho
       cart = cart.filter((p) => p.id !== productId);
     }
+  }
+  // Salva o carrinho novo no lugar do existente no local storage
+  localStorage.setItem('cartShop', JSON.stringify(cart));
+  return cart;
+}
+
+export function rmItemFromCart(productId) {
+  // pega o carrinho do local storage
+  let cart = JSON.parse(localStorage.getItem('cartShop')) || [];
+  // encontra o carrinho no local
+  const existingProduct = cart.find((p) => p.id === Number(productId));
+  if (existingProduct) {
+    cart = cart.filter((p) => p.id !== Number(productId));
   }
   // Salva o carrinho novo no lugar do existente no local storage
   localStorage.setItem('cartShop', JSON.stringify(cart));
