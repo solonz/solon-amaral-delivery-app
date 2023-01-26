@@ -1,17 +1,46 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import NavBar from '../components/navbar';
 import { getCartShop, rmItemFromCart } from '../utils/localStorageHelper';
 import { customerContext } from '../context/customerProvider';
+import orderService from '../services/orderService';
+import usersService from '../services/usersService';
 
 // Página genérica para ser criada
 export default function Checkout() {
   const [isLoading, setIsLoading] = useState(true);
   const { shopCart, setShopCart } = useContext(customerContext);
+  const [registeredSellers, setRegisteredSellers] = useState([]);
+  const [inputSeller, setInputSeller] = useState('');
+  const [inputAddress, setInputAddress] = useState('');
+  const [inputAddressNumber, setInputAddressNumber] = useState('');
+  const [inputSellerId, setInputSellerId] = useState('');
+  const [inputTotalValue, setInputTotalValue] = useState(0);
+
+  const navigate = useNavigate();
+
+  const getAllUsers = async () => {
+    const allUsers = await usersService.getUsers();
+    const sellers = allUsers.filter((user) => user.role === 'seller');
+    setRegisteredSellers(sellers);
+    setInputSeller(sellers[0].name);
+    setInputSellerId(sellers[0].id);
+  };
+
+  function getTotalPrice() {
+    let total = 0;
+    shopCart.forEach((products) => { total += (products.price * products.quantity); });
+    const totalBRL = total
+      .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    setInputTotalValue(totalBRL);
+  }
 
   useEffect(() => {
     const shopFromLocal = getCartShop();
     setShopCart(shopFromLocal);
     setIsLoading(false);
+    getAllUsers();
+    getTotalPrice();
   }, []);
 
   const getTotal = () => {
@@ -20,7 +49,7 @@ export default function Checkout() {
     shopCart.forEach((product) => {
       total += (product.price * product.quantity);
     });
-    return total.toFixed(2);
+    return total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   };
 
   const handleRemove = (e) => {
@@ -30,6 +59,45 @@ export default function Checkout() {
     setShopCart(newCart);
     setIsLoading(false);
   };
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    // envia dados para o back end e recebe retorno
+    const orderRegisterReturn = await orderService.orderRegister(
+      { shopCart: { shopCart },
+        // sellerId: 2, PENDENTE - O ID SEMPRE É NULL MESMO SE PASSARMOS UM NUMERO FIXO
+        deliveryAddress: inputAddress,
+        deliveryNumber: inputAddressNumber,
+        totalPrice: inputTotalValue,
+        status: 'Pendente' },
+    );
+    console.log(inputTotalValue);
+    const orderID = orderRegisterReturn.id;
+    navigate(`/customer/orders/${orderID}`);
+  }
+
+  function getSellerId(sellerName) {
+    const seller = registeredSellers
+      .find((eachSeller) => (
+        eachSeller.name === sellerName || eachSeller.name === inputSeller
+      ));
+    return seller.id;
+  }
+
+  function handleChange({ target }) {
+    if (target.name === 'pessoa-vendedora') {
+      const sellerId = getSellerId(target.value);
+      console.log(sellerId);
+      setInputSellerId(sellerId);
+      setInputSeller(target.value);
+    }
+    if (target.name === 'order-address') {
+      setInputAddress(target.value);
+    }
+    if (target.name === 'order-address-number') {
+      setInputAddressNumber(target.value);
+    }
+  }
 
   const productRow = (index, product) => (
     <tr key={ index }>
@@ -43,10 +111,11 @@ export default function Checkout() {
         {product.quantity}
       </td>
       <td data-testid={ `customer_checkout__element-order-table-unit-price-${index}` }>
-        {product.price}
+        {(product.price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
       </td>
       <td data-testid={ `customer_checkout__element-order-table-sub-total-${index}` }>
-        {(product.quantity * product.price).toFixed(2)}
+        {(product.quantity * product.price)
+          .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
       </td>
       <td>
         <button
@@ -60,25 +129,6 @@ export default function Checkout() {
       </td>
     </tr>
   );
-
-  // // função que pega produtos do back e salva no estado local
-  // useEffect(() => {
-  //   async function getData() {
-  //     // recebe produtos ou retorno da validação do token do back
-  //     const receivedProducts = await customerService.getProducts();
-  //     // verifica se o token é invalido ou não foi enviado, realiza logout e redireciona para /login
-  //     if (receivedProducts === ('Invalid Token' || 'Token not found')) {
-  //       logOut();
-  //       setShopCart([]);
-  //       navigate('/login');
-  //     } else {
-  //       // salva produtos no estado local e habilita para ser mostrado na tela
-  //       setProducts(receivedProducts);
-  //       setIsLoading(false);
-  //     }
-  //   }
-  //   getData();
-  // }, []);
 
   return (
     <>
@@ -105,7 +155,7 @@ export default function Checkout() {
       </span>
       <form
         className="register_form"
-        // onSubmit={ handleSubmit }
+        onSubmit={ handleSubmit }
       >
         <label htmlFor="pessoa-vendedora">
           P. Vendedora Responsável:
@@ -113,12 +163,14 @@ export default function Checkout() {
           <select
             name="pessoa-vendedora"
             type="pessoa-vendedora"
-            id="pessoa-vendedora"
-            // value={ inputSeller }
-            // onChange={ handleChange }
+            value={ inputSeller }
+            onChange={ handleChange }
             data-testid="customer_checkout__select-seller"
           >
-            <option value="seller">Vendedor</option>
+            {registeredSellers.map((seller) => (
+              <option key={ seller.id } id={ seller.id }>
+                {seller.name}
+              </option>))}
           </select>
         </label>
         <br />
@@ -129,8 +181,8 @@ export default function Checkout() {
             type="order-address"
             id="order-address"
             name="order-address"
-            // value={ inputAddress }
-            // onChange={ handleChange }
+            value={ inputAddress }
+            onChange={ handleChange }
             data-testid="customer_checkout__input-address"
           />
         </label>
@@ -142,8 +194,8 @@ export default function Checkout() {
             type="order-address-number"
             id="order-address-number"
             name="order-address-number"
-            // value={ inputNumber }
-            // onChange={ handleChange }
+            value={ inputAddressNumber }
+            onChange={ handleChange }
             data-testid="customer_checkout__input-address-number"
           />
         </label>
@@ -153,6 +205,7 @@ export default function Checkout() {
           // disabled={ disabledBtn }
           className="submit-order"
           data-testid="customer_checkout__button-submit-order"
+          onClick={ handleSubmit }
         >
           Finalizar Pedido
         </button>
