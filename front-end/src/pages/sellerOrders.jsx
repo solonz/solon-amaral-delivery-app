@@ -24,11 +24,16 @@ export default function SellerOrders() {
         { !isLoading && <NavBar /> }
       </header>
       <body>
-        {/* { ordersArray.map((order) => <SellerOrderCard
-        key={ order.id}
+        { ordersArray.map((order) => (<SellerOrderCard
+          key={ order.id }
+          id={ order.id }
+          status={ order.status }
+          totalPrice={ order.total_price }
+          deliveryAddress={ order.delivery_address }
+          deliveryNumber={ order.delivery_number }
+          salesDate={ order.sales_date }
 
-        />
- )} */}
+        />))}
       </body>
 
     </div>

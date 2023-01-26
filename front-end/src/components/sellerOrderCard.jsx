@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { useNavigate } from 'react-router-dom';
 // Componente genérico para ser criado
 export default function SellerOrderCard({
   id,
@@ -11,8 +11,16 @@ export default function SellerOrderCard({
   status,
 
 }) {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/seller/orders/${id}`);
+  };
+
   return (
-    <div>
+    <button
+      onClick={ () => handleClick() }
+      type="button"
+    >
       <div
         data-testid={ `seller_orders__element-order-id-${id}` }
       >
@@ -38,7 +46,7 @@ export default function SellerOrderCard({
       >
         { deliveryAddress }
       </div>
-    </div>
+    </button>
 
   );
 }

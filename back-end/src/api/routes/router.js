@@ -5,6 +5,7 @@ const registerRouter = require('./register.routes');
 const customerRouter = require('./customer.routes');
 const imagesRouter = require('./images.routes');
 const sellerRouter  = require('./seller.routes');
+const saleRoutes = require('./sales.routes');
 
 const routers = express.Router();
 
@@ -16,5 +17,5 @@ routers.use('/register', registerRouter);
 routers.use('/customer', authMiddleWare.validateToken, customerRouter);
 routers.use('/images', imagesRouter);
 routers.use('/seller', authMiddleWare.validateToken, sellerRouter);
-
+routers.use('/sales', authMiddleWare.validateToken, saleRoutes);
 module.exports = routers;
