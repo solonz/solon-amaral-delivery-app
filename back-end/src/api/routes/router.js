@@ -4,6 +4,7 @@ const loginRouter = require('./login.routes');
 const registerRouter = require('./register.routes');
 const customerRouter = require('./customer.routes');
 const imagesRouter = require('./images.routes');
+const sellerRouter  = require('./seller.routes');
 
 const routers = express.Router();
 
@@ -14,5 +15,6 @@ routers.use('/register', registerRouter);
 // a rota customer possui uma validação de token em todas as rotas especificas
 routers.use('/customer', authMiddleWare.validateToken, customerRouter);
 routers.use('/images', imagesRouter);
+routers.use('/seller', authMiddleWare.validateToken, sellerRouter);
 
 module.exports = routers;
