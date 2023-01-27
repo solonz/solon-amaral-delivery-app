@@ -41,20 +41,31 @@ export default function NavBar() {
     </div>
   );
 
+  const adminOptions = () => (
+    <div>
+      <span
+        className="nav_button"
+        data-testid="customer_products__element-navbar-link-orders"
+      >
+        GERENCIAR USUÁRIOS
+      </span>
+    </div>
+  );
+
   // criar funções que retornam links de seller e admin
 
   // ao retornar o navBar, verifica qual role e envia somente as opções corretas
   return (
     <>
       { userRole === 'customer' && customerOptions() }
+      { userRole === 'administrator' && adminOptions() }
       <div>
-        <a
+        <span
           className="nav_button"
-          href="/customer/products"
           data-testid="customer_products__element-navbar-user-full-name"
         >
           { userName }
-        </a>
+        </span>
         <a
           className="nav_button"
           href="/login"

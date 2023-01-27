@@ -1,10 +1,11 @@
 const express = require('express');
-// const productsController = require('../controllers/products.controller');
+
+const registerController = require('../controllers/register.controller');
 
 const routers = express.Router();
+ 
+// as rotas abaixo são complemento da rota /customer...
 
-// as rotas abaixo são complemento da rota /manage...
-
-routers.get('/manage');
+routers.get('/register', registerController.register);
 
 module.exports = routers;
