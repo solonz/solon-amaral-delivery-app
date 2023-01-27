@@ -23,7 +23,7 @@ export default function SellerOrders() {
       <header>
         { !isLoading && <NavBar /> }
       </header>
-      <body>
+      <div>
         { ordersArray.map((order) => (<SellerOrderCard
           key={ order.id }
           id={ order.id }
@@ -31,10 +31,10 @@ export default function SellerOrders() {
           totalPrice={ order.total_price }
           deliveryAddress={ order.delivery_address }
           deliveryNumber={ order.delivery_number }
-          salesDate={ order.sales_date }
+          salesDate={ order.sale_date }
 
         />))}
-      </body>
+      </div>
 
     </div>
   );

@@ -11,6 +11,14 @@ export default function SellerOrderCard({
   status,
 
 }) {
+  const date = salesDate;
+  const d1 = 8;
+  const d2 = 10;
+  const m1 = 5;
+  const m2 = 7;
+  const y1 = 2;
+  const y2 = 4;
+  const dateF = `${date.slice(d1, d2)}/${date.slice(m1, m2)}/${date.slice(y1, y2)}`;
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(`/seller/orders/${id}`);
@@ -24,7 +32,7 @@ export default function SellerOrderCard({
       <div
         data-testid={ `seller_orders__element-order-id-${id}` }
       >
-        { deliveryNumber }
+        { id }
       </div>
       <div
         data-testid={ `seller_orders__element-delivery-status-${id}` }
@@ -34,17 +42,17 @@ export default function SellerOrderCard({
       <div
         data-testid={ `seller_orders__element-order-date-${id}` }
       >
-        { salesDate }
+        { dateF }
       </div>
       <div
         data-testid={ `seller_orders__element-card-price-${id}` }
       >
-        { totalPrice }
+        {` R$ ${totalPrice.replace('.', ',')}` }
       </div>
       <div
         data-testid={ `seller_orders__element-card-address-${id}` }
       >
-        { deliveryAddress }
+        { `${deliveryAddress}, ${deliveryNumber}` }
       </div>
     </button>
 
@@ -52,9 +60,9 @@ export default function SellerOrderCard({
 }
 
 SellerOrderCard.propTypes = {
-  deliveryNumber: PropTypes.number.isRequired,
+  deliveryNumber: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
-  totalPrice: PropTypes.number.isRequired,
+  totalPrice: PropTypes.string.isRequired,
   deliveryAddress: PropTypes.string.isRequired,
   salesDate: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,

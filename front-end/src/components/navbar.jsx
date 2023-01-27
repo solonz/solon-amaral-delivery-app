@@ -42,7 +42,9 @@ export default function NavBar() {
   );
   const sellerOptions = () => (
     <div>
-      <span>
+      <span
+        data-testid="customer_products__element-navbar-link-products"
+      >
         PEDIDOS
       </span>
     </div>);

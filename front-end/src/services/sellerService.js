@@ -1,3 +1,5 @@
+import { getCredentials } from '../utils/localStorageHelper';
+
 const getSales = async () => {
   // pega dados do usuário no localStorage
   const credentials = getCredentials();
@@ -6,7 +8,7 @@ const getSales = async () => {
   // verifica se existe um token no localStorage
   if (!token) return 'Token not found';
   // realiza a requisição dos produtos enviando token no headers
-  const response = await fetch('http://localhost:3001/sellers/orders', {
+  const response = await fetch('http://localhost:3001/seller/orders', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

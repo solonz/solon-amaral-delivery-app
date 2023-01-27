@@ -17,5 +17,5 @@ routers.use('/register', registerRouter);
 routers.use('/customer', authMiddleWare.validateToken, customerRouter);
 routers.use('/images', imagesRouter);
 routers.use('/seller', authMiddleWare.validateToken, sellerRouter);
-routers.use('/sales', authMiddleWare.validateToken, saleRoutes);
+routers.use('/sales', saleRoutes);
 module.exports = routers;
