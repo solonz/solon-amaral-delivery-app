@@ -21,7 +21,6 @@ const validateToken = async (token) => {
         // tenta verificar o token, se for válido, retorna as informações do token
         const { credentials } = jwt.verify(token, secret);
         return credentials;
-
     } catch (error) {
         // se não for válido, retorna o erro
         const errorOutput = {
