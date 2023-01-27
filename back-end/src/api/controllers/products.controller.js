@@ -9,6 +9,7 @@ const getProducts = async (req, res) => {
 
 const getImages = (req, res) => {
   const { imgName } = req.params;
+  console.log(req.params);
   const options = {
     root: path.join(__dirname, '../images'),
     dotfiles: 'deny',

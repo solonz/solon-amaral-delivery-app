@@ -15,7 +15,7 @@ routers.use('/login', loginRouter);
 routers.use('/register', registerRouter);
 // a rota customer possui uma validação de token em todas as rotas especificas
 routers.use('/customer', authMiddleWare.validateToken, customerRouter);
-routers.use('/images', authMiddleWare.validateToken, imagesRouter);
+// routers.use('/images', authMiddleWare.validateToken, imagesRouter);
 routers.use('/sales', saleRouter);
 routers.use('/users', authMiddleWare.validateToken, usersRouter);
 routers.use('/admin', authMiddleWare.validateToken, adminRouter);
