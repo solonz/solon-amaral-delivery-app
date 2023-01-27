@@ -14,5 +14,4 @@ app.use(routers);
 
 app.use(errorMiddleware); // pega os erros lançados e retornam em formato de válido
 
-
 module.exports = app;
