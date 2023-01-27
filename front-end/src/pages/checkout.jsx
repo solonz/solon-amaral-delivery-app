@@ -65,7 +65,8 @@ export default function Checkout() {
     // envia dados para o back end e recebe retorno
     const orderRegisterReturn = await orderService.orderRegister(
       { shopCart: { shopCart },
-        // sellerId: 2, PENDENTE - O ID SEMPRE É NULL MESMO SE PASSARMOS UM NUMERO FIXO
+        sellerId: inputSellerId,
+        // PENDENTE - O ID SEMPRE É NULL MESMO SE PASSARMOS UM NUMERO FIXO
         deliveryAddress: inputAddress,
         deliveryNumber: inputAddressNumber,
         totalPrice: inputTotalValue,
