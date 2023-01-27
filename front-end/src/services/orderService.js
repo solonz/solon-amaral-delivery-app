@@ -1,6 +1,7 @@
 import { getCredentials } from '../utils/localStorageHelper';
 
 const orderRegister = async (shopCart) => {
+  console.log(shopCart);
   const credentials = getCredentials();
   const { token } = credentials;
   if (!token) {

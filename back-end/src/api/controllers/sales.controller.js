@@ -9,8 +9,7 @@ const includeSale = async (req, res) => {
     deliveryAddress,
     deliveryNumber,
     totalPrice,
-    status,
-  } = req.body;
+    status } = req.body;
 
   const createdSale = await salesService.createSale({
     id,
@@ -23,7 +22,7 @@ const includeSale = async (req, res) => {
   });
   
   return res.status(201).json(createdSale);
-  };
+};
 
 module.exports = {
   includeSale,

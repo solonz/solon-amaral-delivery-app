@@ -44,7 +44,6 @@ export default function Checkout() {
   }, []);
 
   const getTotal = () => {
-    // console.log(shopCart);
     let total = 0;
     shopCart.forEach((product) => {
       total += (product.price * product.quantity);
@@ -62,17 +61,18 @@ export default function Checkout() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    let newValue = inputTotalValue.replace('R$', '');
+    newValue = parseFloat(newValue.replace(',', '.')).toFixed(2);
     // envia dados para o back end e recebe retorno
     const orderRegisterReturn = await orderService.orderRegister(
-      { shopCart: { shopCart },
+      { shopCart,
         sellerId: inputSellerId,
         // PENDENTE - O ID SEMPRE É NULL MESMO SE PASSARMOS UM NUMERO FIXO
         deliveryAddress: inputAddress,
         deliveryNumber: inputAddressNumber,
-        totalPrice: inputTotalValue,
+        totalPrice: newValue,
         status: 'Pendente' },
     );
-    console.log(inputTotalValue);
     const orderID = orderRegisterReturn.id;
     navigate(`/customer/orders/${orderID}`);
   }

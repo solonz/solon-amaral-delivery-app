@@ -19,9 +19,9 @@ const validateToken = async (token) => {
     const secret = await fs.promises.readFile('jwt.evaluation.key', 'utf8');
     try {
         // tenta verificar o token, se for válido, retorna as informações do token
-        const { data } = jwt.verify(token, secret);
+        const { credentials } = jwt.verify(token, secret);
+        return credentials;
 
-        return data;
     } catch (error) {
         // se não for válido, retorna o erro
         const errorOutput = {
