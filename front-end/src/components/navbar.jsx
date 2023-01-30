@@ -51,6 +51,14 @@ export default function NavBar() {
       </span>
     </div>
   );
+  const sellerOptions = () => (
+    <div>
+      <span
+        data-testid="customer_products__element-navbar-link-products"
+      >
+        PEDIDOS
+      </span>
+    </div>);
 
   // criar funções que retornam links de seller e admin
 
@@ -59,6 +67,7 @@ export default function NavBar() {
     <>
       { userRole === 'customer' && customerOptions() }
       { userRole === 'administrator' && adminOptions() }
+      { userRole === 'seller' && sellerOptions() }
       <div>
         <span
           className="nav_button"
