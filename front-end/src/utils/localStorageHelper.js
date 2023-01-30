@@ -1,10 +1,8 @@
 export function logIn(credentials) {
-  // salva dados do usuário no item 'user' do localStorage
   localStorage.setItem('user', JSON.stringify(credentials));
 }
 
 export function getCredentials() {
-  // pega dados do usuário no item 'user' do localStorage
   return JSON.parse(localStorage.getItem('user'));
 }
 
@@ -12,6 +10,10 @@ export function logOut() {
   // apaga dados do usuário e do carrinho do localStorage
   localStorage.removeItem('user');
   localStorage.removeItem('cartShop');
+}
+
+export function getCartShop() {
+  return JSON.parse(localStorage.getItem('cartShop'));
 }
 
 export function addToCart(product) {
@@ -110,6 +112,19 @@ export function rmFromCart(productId) {
       // se for zero, remove o produto do carrinho
       cart = cart.filter((p) => p.id !== productId);
     }
+  }
+  // Salva o carrinho novo no lugar do existente no local storage
+  localStorage.setItem('cartShop', JSON.stringify(cart));
+  return cart;
+}
+
+export function rmItemFromCart(productId) {
+  // pega o carrinho do local storage
+  let cart = JSON.parse(localStorage.getItem('cartShop')) || [];
+  // encontra o carrinho no local
+  const existingProduct = cart.find((p) => p.id === Number(productId));
+  if (existingProduct) {
+    cart = cart.filter((p) => p.id !== Number(productId));
   }
   // Salva o carrinho novo no lugar do existente no local storage
   localStorage.setItem('cartShop', JSON.stringify(cart));

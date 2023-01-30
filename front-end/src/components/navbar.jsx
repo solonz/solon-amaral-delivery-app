@@ -40,6 +40,17 @@ export default function NavBar() {
       </a>
     </div>
   );
+
+  const adminOptions = () => (
+    <div>
+      <span
+        className="nav_button"
+        data-testid="customer_products__element-navbar-link-orders"
+      >
+        GERENCIAR USUÁRIOS
+      </span>
+    </div>
+  );
   const sellerOptions = () => (
     <div>
       <span
@@ -55,15 +66,15 @@ export default function NavBar() {
   return (
     <>
       { userRole === 'customer' && customerOptions() }
+      { userRole === 'administrator' && adminOptions() }
       { userRole === 'seller' && sellerOptions() }
       <div>
-        <a
+        <span
           className="nav_button"
-          href="/customer/products"
           data-testid="customer_products__element-navbar-user-full-name"
         >
           { userName }
-        </a>
+        </span>
         <a
           className="nav_button"
           href="/login"

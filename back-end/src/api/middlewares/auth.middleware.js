@@ -12,10 +12,9 @@ const validateToken = async (req, _res, next) => {
     throw error;
   }
 
-
   const user = await jwtUtil.validateToken(authorization);
-
   req.user = user;
+
   next();
 };
 
