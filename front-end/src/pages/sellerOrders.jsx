@@ -28,10 +28,10 @@ export default function SellerOrders() {
           key={ order.id }
           id={ order.id }
           status={ order.status }
-          totalPrice={ order.total_price }
-          deliveryAddress={ order.delivery_address }
-          deliveryNumber={ order.delivery_number }
-          salesDate={ order.sale_date }
+          totalPrice={ order.totalPrice }
+          deliveryAddress={ order.deliveryAddress }
+          deliveryNumber={ order.deliveryNumber }
+          salesDate={ order.saleDate }
 
         />))}
       </div>
