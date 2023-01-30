@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoginService from '../services/loginService';
+import { getCredentials } from '../utils/localStorageHelper';
 
 const { logIn } = require('../utils/localStorageHelper');
 
@@ -25,6 +26,11 @@ export default function Login() {
     };
     toggleBtn();
   }, [inputEmail, inputPassword]);
+
+  useEffect(() => {
+    const user = getCredentials();
+    if (user) navigate('/customer/products');
+  }, []);
 
   // gerenciador de formulário controlado
   function handleChange({ target }) {
