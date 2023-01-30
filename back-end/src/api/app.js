@@ -5,7 +5,7 @@ const routers = require('./routes/router');
 const errorMiddleware = require('./middlewares/error');
 
 const app = express();
-app.use(cors({ allowedHeaders: '*', origin: '*', methods: '*' }));
+app.use(cors());
 
 app.use(express.json());
 

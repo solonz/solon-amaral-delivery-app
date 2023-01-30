@@ -4,6 +4,7 @@ const loginRouter = require('./login.routes');
 const registerRouter = require('./register.routes');
 const customerRouter = require('./customer.routes');
 const imagesRouter = require('./images.routes');
+const sellerRouter = require('./seller.routes');
 const saleRouter = require('./sales.routes');
 const usersRouter = require('./users.routes');
 const adminRouter = require('./admin.routes');
@@ -20,5 +21,6 @@ routers.use('/sales', saleRouter);
 routers.use('/users', authMiddleWare.validateToken, usersRouter);
 routers.use('/admin', authMiddleWare.validateToken, adminRouter);
 routers.use('/images', imagesRouter);
+routers.use('/seller', authMiddleWare.validateToken, sellerRouter);
 
 module.exports = routers;

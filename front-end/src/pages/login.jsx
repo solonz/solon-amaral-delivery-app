@@ -43,11 +43,15 @@ export default function Login() {
     );
     // verifica se o retorno do back é positivo, se não for, mostra a mensagem oculta na tela
     if (loginReturn.message === 'Not Found') return setNotFound(true);
+    console.log(loginReturn);
     // salva dados do login no localStorage
     logIn(loginReturn);
     // redireciona para a página do administrador
+    console.log(loginReturn);
     if (loginReturn.role === 'administrator') return navigate('/admin/manage');
+    if (loginReturn.role === 'seller') return navigate('/seller/orders');
     // redireciona para a página de produtos
+    console.log('1');
     navigate('/customer/products');
   }
 
